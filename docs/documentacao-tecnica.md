@@ -20,6 +20,9 @@ simple-education/
 ├── package.json              Scripts da raiz (npm workspaces: backend + frontend)
 ├── package-lock.json         Versões exatas de todas as dependências
 ├── README.md
+├── index.php                 Versão XAMPP: redireciona http://localhost/simple-education/ para xampp/
+├── .htaccess                 Versão XAMPP: o Apache serve só xampp/ (bloqueia backend/, frontend/, docs/, .env, .md)
+├── xampp/                    Versão XAMPP (PHP + JavaScript puro, sem npm nem build) — ver seção 10
 ├── scripts/
 │   ├── iniciar.mjs           npm run iniciar: cria o .env, confere tudo, gera o build e inicia o servidor
 │   └── verificar.mjs         npm run verificar: confere Node, dependências, .env, MySQL (conexão, senha, versão) e porta
@@ -260,6 +263,26 @@ O projeto **não foi publicado** nesta etapa. Se a avaliação exigir um link on
 | Usuário do banco | Com permissão de criar tabelas; em produção, não usar `db:reset` |
 
 ---
+
+## 10. Versão XAMPP (PHP + JavaScript puro)
+
+Segunda forma de rodar o sistema, para quem usa só o XAMPP (sem terminal). Mesmas telas, regras e contrato da API; o código fica em `xampp/` e não depende de nada da versão Node em tempo de execução.
+
+| Parte | Onde | Como funciona |
+|---|---|---|
+| Telas | `xampp/*.html`, `xampp/js/`, `xampp/css/`, `xampp/fontes/` | Uma página `.html` por tela; JavaScript puro em módulos nativos do navegador; parâmetros na URL (`aula.html?slug=...`, `tentativa.html?id=...`); CSS e fontes copiados da versão React |
+| Chamadas ao servidor | `xampp/js/api.js` | Único lugar com `fetch`; base relativa `api/index.php` |
+| API | `xampp/api/index.php` + arquivos por assunto | Roteador por PATH_INFO (`api/index.php/auth/login`), sem mod_rewrite; mesmas rotas, JSON e status de [api.md](api.md) |
+| Conexão | `xampp/api/conexao.php` | Único lugar com host, porta, usuário, senha e banco (`simple_education_xampp`); padrão do XAMPP: `root` sem senha |
+| Instalação | `xampp/api/instalar.php` + `xampp/api/sql/` | No primeiro acesso cria o banco e executa `estrutura.sql` e `conteudo.sql` (uma instalação por vez, com `GET_LOCK`); o último passo cria a tabela `instalacao_concluida`. Banco sem essa tabela = instalação interrompida: sem contas, é recriado sozinho; com contas, a tela orienta apagar o banco no phpMyAdmin |
+| Senhas e sessão | API | `password_hash`/`password_verify`; sessão na tabela `sessions` (hash SHA-256 do token, cookie `se_session` HttpOnly, SameSite=Lax, 7 dias) |
+| Limite de login | tabela `login_attempts` | 5 erros em 15 minutos por IP + e-mail (o PHP não guarda estado na memória entre requisições) |
+
+- **Banco separado (`simple_education_xampp`):** as senhas da versão Node usam scrypt, que o PHP não confere de forma nativa; com bancos separados as duas versões convivem.
+- **Conteúdo:** `xampp/api/sql/*.sql` são gerados por `npm run content:export-sql` (`backend/src/db/seed/export-sql.js`) a partir das migrations e da carga da versão Node. Uma instalação existente não recebe conteúdo novo sozinha: é preciso apagar o banco no phpMyAdmin (perde contas e histórico).
+- **Proteção do gabarito:** o `.htaccess` bloqueia `xampp/api/sql/` e as pastas da versão Node; a API só envia gabarito e explicação depois da resposta, como na versão Node.
+- **Requisitos:** PHP 8.0+ com PDO/pdo_mysql, mbstring e json (todos ativos no XAMPP 8.x); MariaDB 10.2.1+ ou MySQL 8.0.19+; Apache com `AllowOverride All` (padrão do XAMPP em `htdocs`).
+- **Validação:** fluxo completo no navegador (Apache + PHP 8.2 + MariaDB 10.4, a série do XAMPP 8.2); instalação e API também conferidas com MySQL 8.0.46; lint em PHP 8.0 e 8.2. O XAMPP Control Panel em si não foi testado.
 
 ## Resultado da validação da entrega (17/11/2026)
 

@@ -19,6 +19,7 @@
     "db:check": "npm run db:check -w backend",
     "test": "npm test -w backend",
     "content:export": "npm run content:export -w backend",
+    "content:export-sql": "npm run content:export-sql -w backend",
     "setup": "npm run db:migrate && npm run db:seed && npm run db:check",
     "apresentacao": "npm run build && npm start"
   },

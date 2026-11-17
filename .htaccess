@@ -1,0 +1,7 @@
+# Versão XAMPP: o Apache só deve servir a pasta xampp/ (telas e API).
+# Bloqueia a versão Node (código, conteúdo com gabarito, configuração) e arquivos internos.
+# (?i): sem diferenciar maiúsculas, porque no Windows "Backend" e "backend" são a mesma pasta.
+RedirectMatch 404 (?i)^.*/(backend|frontend|scripts|docs|node_modules|\.git)(/.*)?$
+<FilesMatch "^(\.env.*|package(-lock)?\.json|.*\.md)$">
+  Require all denied
+</FilesMatch>

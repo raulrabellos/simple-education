@@ -12,7 +12,8 @@
     "db:reset": "node src/db/reset.js",
     "db:check": "node src/db/check.js",
     "test": "node --test --test-concurrency=1 \"tests/*.test.js\"",
-    "content:export": "node src/db/seed/export.js"
+    "content:export": "node src/db/seed/export.js",
+    "content:export-sql": "node src/db/seed/export-sql.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",
