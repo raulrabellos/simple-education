@@ -1,5 +1,5 @@
 /*
- * Exibição de textos matemáticos do conteúdo (igual a frontend/src/components/LessonBody.jsx).
+ * Exibição de textos matemáticos do conteúdo (igual a frontend/src/components/LessonBody.jsx da versão React, na branch main).
  * Marcações usadas no conteúdo (vindas da API):
  *   x^{2}   → expoente (x²)        a_{n}  → índice (aₙ)        **texto** → negrito
  *   linhas "- " → lista            linhas "1. " → lista numerada

@@ -1,5 +1,5 @@
 -- Estrutura do banco da versão XAMPP do Simple Education.
--- Gerado por "npm run content:export-sql" (backend/src/db/seed/export-sql.js). Não edite à mão.
+-- Gerado a partir da versão Node (branch main) com "npm run content:export-sql".
 -- Executado automaticamente por xampp/api/instalar.php no primeiro acesso.
 
 CREATE TABLE `users` (

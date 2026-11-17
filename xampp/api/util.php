@@ -3,7 +3,7 @@
  * Utilitários da API: erros HTTP, resposta JSON, acesso ao banco,
  * leitura e validação de dados e normalização de texto para a pesquisa.
  *
- * Equivalem a backend/src/utils/*.js da versão Node.
+ * Equivalem a backend/src/utils/*.js da versão Node (branch main).
  */
 
 declare(strict_types=1);

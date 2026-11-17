@@ -1,4 +1,4 @@
-// Funções de formatação (mesmas da versão React: frontend/src/utils/format.js).
+// Funções de formatação (mesmas da versão React, na branch main: frontend/src/utils/format.js).
 
 export const SCHOOL_YEAR_OPTIONS = [
   { value: '', label: 'Não informar / não sou estudante' },

@@ -1,5 +1,5 @@
 /*
- * Peças de tela reutilizáveis (equivalentes a frontend/src/components/ui.jsx).
+ * Peças de tela reutilizáveis (equivalentes a frontend/src/components/ui.jsx da versão React, na branch main).
  *
  * SEGURANÇA: todo texto entra no DOM como nó de texto (createTextNode / textContent).
  * Nada aqui usa innerHTML, então conteúdo vindo da API nunca vira HTML.
